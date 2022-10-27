@@ -1,2 +1,27 @@
 <h1>Welcome</h1>
 <a href="{% url "ada:logout"%}">Logout</a>
+<br><br><br>
+<form method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+  <label for="">Upload the File</label>
+  <input type="file" name="myfile" value="" required>
+  <input type="submit" name="" value="Upload">
+</form><br><br>
+{% if data %}
+<h2>Your Files</h2>
+<table>
+<tr>
+  <th>File Name</th>
+  <th>Analysis</th>
+</tr>
+
+{% for i in data %}
+<tr>
+  <td>{{i.name}}</td>
+  <td><a href=""><button>Analyse</button></a></td>
+
+
+</tr>
+{% endfor %}
+</table>
+{% endif %}

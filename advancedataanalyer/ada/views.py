@@ -1,5 +1,5 @@
 from django.shortcuts import render,redirect
-from ada.models import userdetail
+from ada.models import userdetail,userfiles
 # Create your views here.
 def index(request):
     request.session['usr']=""
@@ -35,7 +35,12 @@ def logout(request):
 
 def dashboard(request):
     if request.session['usr']:
-        return render(request,'dashboard.html')
+        if request.method=="POST":
+            if request.FILES['myfile']:
+                if not userfiles.objects.filter(name=request.FILES['myfile'].name).exists():
+                    userfiles(email=request.session['usr'],files=request.FILES['myfile'],name=request.FILES['myfile'].name).save()
+        a=userfiles.objects.filter(email=request.session['usr'])
+        return render(request,'dashboard.html',{'data':a})
     else:
         return redirect('ada:login')
 

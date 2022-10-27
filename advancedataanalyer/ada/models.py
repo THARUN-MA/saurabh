@@ -8,3 +8,11 @@ class userdetail(models.Model):
 
     def __str__(self):
         return self.email
+
+class userfiles(models.Model):
+    email=models.CharField(max_length=264)
+    files=models.FileField(upload_to="")
+    name=models.CharField(max_length=264)
+
+    def __str__(self):
+        return self.email
